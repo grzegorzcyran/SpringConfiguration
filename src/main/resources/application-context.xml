@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="xmlApp.properties" />
+
+    <!-- definiujemy klasę KetoDietService jako bean zarządzany przez Kontener Springa -->
+    <bean id="ketoDiet" class="sda.grcy.app.xmlConfig.coreApp.KetoDietService" ></bean>
+
+    <bean id="vegeDiet" class="sda.grcy.app.xmlConfig.coreApp.VegeDietService" />
+
+
+    <bean id="footballCoach" class="sda.grcy.app.xmlConfig.coreApp.FootballCoach" >
+        <!-- wiązanie przez konstruktor -->
+        <constructor-arg name="dietService" ref="vegeDiet" />
+        <!--ustawianie wartości na sztywno -->
+        <property name="teamName" value="Valencia CF" />
+    </bean>
+
+    <bean id="swimCoach" class="sda.grcy.app.xmlConfig.coreApp.SwimmingCoach" >
+        <!-- wiązanie (inicjowanie pól klasy) przez setter -->
+        <property name="dietService" ref="ketoDiet" />
+    </bean>
+
+    <bean id="secondFootballCoach" class="sda.grcy.app.xmlConfig.coreApp.FootballCoach" >
+        <!-- wiązanie przez konstruktor -->
+        <constructor-arg name="dietService" ref="vegeDiet" />
+        <!--ustawianie wartości z pliku z właściwościami -->
+        <property name="teamName" value="${team.name}" />
+    </bean>
+
+</beans>
